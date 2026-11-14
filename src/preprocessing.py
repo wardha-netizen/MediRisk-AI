@@ -26,10 +26,19 @@ def prepare_disease_dataset(disease_name, df):
     elif disease_name == "heart":
         target_column = "num"
 
-        # 0 means no heart disease; 1-4 mean heart disease
+        # Convert heart disease target into binary values
         df[target_column] = (
             pd.to_numeric(df[target_column], errors="coerce") > 0
         ).astype(int)
+
+        # Convert coded categorical features into categories
+        heart_categorical = [
+            "sex", "cp", "fbs", "restecg",
+            "exang", "slope", "thal"
+        ]
+
+        for column in heart_categorical:
+            df[column] = df[column].astype("category")
 
     elif disease_name == "kidney":
         target_column = "class"
