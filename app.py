@@ -10,6 +10,7 @@ from src.prediction_analysis import render_prediction_analysis
 from src.model_experiments import render_model_experiments
 from src.prediction import load_model
 from src.model_explainer import explain_decision_tree
+from src.input_guidance import render_input_guidance
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -495,7 +496,7 @@ elif page == "Predictions":
     )
 
     st.write("")
-
+    render_input_guidance(selected_disease)
     # --------------------------------------
     # DIABETES FORM
     # --------------------------------------
