@@ -1,0 +1,23 @@
+Column,Data Type,Missing Values,Unique Values
+Diabetes_binary,float64,0,2
+HighBP,float64,0,2
+HighChol,float64,0,2
+CholCheck,float64,0,2
+BMI,float64,0,80
+Smoker,float64,0,2
+Stroke,float64,0,2
+HeartDiseaseorAttack,float64,0,2
+PhysActivity,float64,0,2
+Fruits,float64,0,2
+Veggies,float64,0,2
+HvyAlcoholConsump,float64,0,2
+AnyHealthcare,float64,0,2
+NoDocbcCost,float64,0,2
+GenHlth,float64,0,5
+MentHlth,float64,0,31
+PhysHlth,float64,0,31
+DiffWalk,float64,0,2
+Sex,float64,0,2
+Age,float64,0,13
+Education,float64,0,6
+Income,float64,0,8

@@ -1,0 +1,25 @@
+params,mean_test_score,std_test_score,rank_test_score
+"{'classifier__class_weight': None, 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 5}",0.00975609756097561,0.019512195121951223,22
+"{'classifier__class_weight': None, 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 10}",0.017391304347826087,0.034782608695652174,20
+"{'classifier__class_weight': None, 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 20}",0.0,0.0,23
+"{'classifier__class_weight': None, 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 5}",0.03586828324762938,0.03242245950270116,17
+"{'classifier__class_weight': None, 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 10}",0.015384615384615385,0.03076923076923077,21
+"{'classifier__class_weight': None, 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 20}",0.0,0.0,23
+"{'classifier__class_weight': None, 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 5}",0.10967292577408323,0.02664125225578318,14
+"{'classifier__class_weight': None, 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 10}",0.043359975248801114,0.03891090958317054,16
+"{'classifier__class_weight': None, 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 20}",0.02727272727272727,0.05454545454545454,18
+"{'classifier__class_weight': None, 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 5}",0.12923827389205417,0.07148802460079036,13
+"{'classifier__class_weight': None, 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 10}",0.09670662563600083,0.032083615407547596,15
+"{'classifier__class_weight': None, 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 20}",0.02727272727272727,0.05454545454545454,18
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 5}",0.21144221562598303,0.008472397595953139,5
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 10}",0.21331255278144323,0.009201655689877197,3
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 3, 'classifier__min_samples_leaf': 20}",0.2127414762866268,0.008922973978017612,4
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 5}",0.20256278874978073,0.0409692109733094,10
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 10}",0.20462357129357764,0.04073701781077106,8
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 5, 'classifier__min_samples_leaf': 20}",0.20552919942716225,0.03902307714323896,7
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 5}",0.20071263064668915,0.01880677092340304,12
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 10}",0.21099020161122603,0.015497725187713335,6
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 7, 'classifier__min_samples_leaf': 20}",0.20430319021463256,0.020355041579415013,9
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 5}",0.20225456727628308,0.040969789273337005,11
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 10}",0.21631108224392115,0.0243125783350787,2
+"{'classifier__class_weight': 'balanced', 'classifier__max_depth': 10, 'classifier__min_samples_leaf': 20}",0.22158995053045163,0.032928508717109645,1

@@ -1,0 +1,13 @@
+Column,Data Type,Missing Values,Unique Values
+id,int64,0,5110
+gender,string,0,3
+age,float64,0,104
+hypertension,int64,0,2
+heart_disease,int64,0,2
+ever_married,string,0,2
+work_type,string,0,5
+Residence_type,string,0,2
+avg_glucose_level,float64,0,3979
+bmi,float64,201,418
+smoking_status,string,0,4
+stroke,int64,0,2

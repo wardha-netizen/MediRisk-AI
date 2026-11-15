@@ -1,0 +1,12 @@
+Column,Data Type,Missing Values,Unique Values
+Age,int64,0,72
+Gender,string,0,2
+Total_Bilirubin,float64,0,113
+Direct_Bilirubin,float64,0,80
+Alkaline_Phosphotase,int64,0,263
+Alamine_Aminotransferase,int64,0,152
+Aspartate_Aminotransferase,int64,0,177
+Total_Protiens,float64,0,58
+Albumin,float64,0,40
+Albumin_and_Globulin_Ratio,float64,4,69
+Dataset,int64,0,2
