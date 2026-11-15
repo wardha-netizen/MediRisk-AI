@@ -1,0 +1,6 @@
+Disease,Observations
+Diabetes,No automatic warning; manual validation still required.
+Heart,No automatic warning; manual validation still required.
+Kidney,"Check duplicates, leakage and training/test separation."
+Liver,Review class balance and Decision Tree generalisation.
+Stroke,"Low precision: 17.86% | Low F1: 28.46% | Investigate positive-class precision, recall and class imbalance."

@@ -1,0 +1,6 @@
+Disease,Test Records,True Positive,True Negative,False Positive,False Negative
+Diabetes,14139,5477,4853,2217,1592
+Heart,61,23,21,12,5
+Kidney,80,49,30,0,1
+Liver,117,56,25,9,27
+Stroke,1022,35,811,161,15

@@ -1,0 +1,26 @@
+Column,Data Type,Missing Values,Unique Values
+age,string,9,76
+bp,string,12,10
+sg,string,47,5
+al,string,46,6
+su,string,49,6
+rbc,string,152,2
+pc,string,65,2
+pcc,string,4,2
+ba,string,4,2
+bgr,string,44,146
+bu,string,19,118
+sc,string,17,86
+sod,string,87,34
+pot,string,88,42
+hemo,string,52,118
+pcv,string,71,42
+wbcc,string,106,89
+rbcc,string,131,48
+htn,string,2,2
+dm,string,2,2
+cad,string,2,2
+appet,string,1,2
+pe,string,1,2
+ane,string,1,2
+class,string,0,2

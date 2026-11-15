@@ -1,0 +1,6 @@
+Dataset,Records,Columns,Missing Values,Duplicate Rows,Minority Class (%)
+diabetes,70692,22,0,1635,50.0
+heart,303,14,6,0,4.29
+kidney,400,25,1012,0,37.5
+liver,583,11,4,13,28.64
+stroke,5110,12,201,0,4.87

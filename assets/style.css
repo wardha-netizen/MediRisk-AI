@@ -421,3 +421,125 @@ footer {
         padding: 14px;
     }
 }
+
+/* =========================================
+   MEDIRISK AI - DATASET EXPLORER FIX
+   ========================================= */
+
+/* Dropdown backgrounds */
+div[data-baseweb="select"] > div {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 10px !important;
+}
+
+div[data-baseweb="select"] span {
+    color: #17324D !important;
+}
+
+/* Dropdown options */
+div[role="listbox"] {
+    background-color: #FFFFFF !important;
+}
+
+div[role="option"] {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+}
+
+/* Metric values and labels */
+[data-testid="stMetric"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #DCE7F0 !important;
+    border-radius: 14px !important;
+    padding: 20px !important;
+}
+
+[data-testid="stMetricLabel"] *,
+[data-testid="stMetricValue"] * {
+    color: #17324D !important;
+}
+
+/* Tabs */
+button[data-baseweb="tab"] {
+    color: #475569 !important;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #1769D2 !important;
+    border-bottom-color: #1769D2 !important;
+}
+
+/* Dataset table */
+[data-testid="stDataFrame"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #DCE7F0 !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* General input text */
+[data-testid="stNumberInput"] input,
+[data-testid="stTextInput"] input {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+}
+/* Download CSV Button */
+
+[data-testid="stDownloadButton"] button {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+    border: 1px solid #DCE7F0 !important;
+    border-radius: 10px !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+}
+
+/* Button text and icons */
+[data-testid="stDownloadButton"] button * {
+    color: #17324D !important;
+}
+
+/* Hover effect */
+[data-testid="stDownloadButton"] button:hover {
+    background-color: #E7F4F6 !important;
+    border-color: #167D8D !important;
+    color: #167D8D !important;
+}
+/* Model comparison multiselect */
+
+div[data-baseweb="select"] > div {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+    border: 1px solid #CBD5E1 !important;
+}
+
+/* Selected metric tags */
+div[data-baseweb="tag"] {
+    background-color: #167D8D !important;
+    border-radius: 7px !important;
+}
+
+div[data-baseweb="tag"] span {
+    color: #FFFFFF !important;
+}
+
+/* Multiselect text */
+div[data-baseweb="select"] input {
+    color: #17324D !important;
+}
+/* Restore readable Plotly labels */
+
+[data-testid="stPlotlyChart"] .js-plotly-plot svg text {
+    fill: #17324D !important;
+}
+
+[data-testid="stPlotlyChart"] .js-plotly-plot .legendtext {
+    fill: #17324D !important;
+}
+
+[data-testid="stPlotlyChart"] .js-plotly-plot .xtick text,
+[data-testid="stPlotlyChart"] .js-plotly-plot .ytick text {
+    fill: #17324D !important;
+}
