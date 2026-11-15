@@ -8,6 +8,8 @@ from src.dataset_explorer import render_dataset_explorer
 from src.model_comparison import render_model_comparison
 from src.prediction_analysis import render_prediction_analysis
 from src.model_experiments import render_model_experiments
+from src.prediction import load_model
+from src.model_explainer import explain_decision_tree
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -167,13 +169,114 @@ def show_result(result):
         "Educational use only. This prediction is not a medical "
         "diagnosis or a substitute for professional medical advice."
     )
+   
+    # ==========================================
+    # EXPLAINABLE AI SECTION
+    # ==========================================
+
+    st.divider()
+
+    st.subheader("How the Decision Tree Made Its Prediction")
+
+    st.caption(
+        "Explore the exact decision rules followed by "
+        "the trained Decision Tree for this input."
+    )
+
+    explanation = result.get("explanation", [])
+
+    if explanation:
+
+        explanation_df = pd.DataFrame(explanation)
+
+        explanation_df.index = range(
+            1, len(explanation_df) + 1
+        )
+
+        explanation_df.index.name = "Step"
+
+        st.dataframe(
+            explanation_df,
+            use_container_width=True
+        )
+
+        with st.expander("Understand the Decision Tree rules"):
+
+            st.write(
+                "Each row represents a decision made by "
+                "the model. A feature value is compared "
+                "against a learned threshold."
+            )
+
+            st.write(
+                "The model follows either the left or "
+                "right branch until it reaches a leaf "
+                "node containing the predicted class."
+            )
+
+    else:
+
+        if result.get("explanation_error"):
+
+            st.info(
+                "The prediction was generated, but "
+                "the explanation could not be displayed."
+            )
+
+            st.caption(
+                result["explanation_error"]
+            )
+
+        else:
+
+            st.info(
+                "The model did not produce any "
+                "intermediate decision rules."
+            )
+
+    st.caption(
+        "These rules describe how the machine learning "
+        "model operates. They are not medical explanations "
+        "or evidence of disease causation."
+    )
 
 
-def save_result(disease, result):
+
+def save_result(disease, result, inputs):
+    """Save prediction and generate its Decision Tree explanation."""
+
+    saved_result = result.copy()
+
+    try:
+        model_data = load_model(disease)
+
+        model = model_data["model"]
+        preprocessor = model_data["preprocessor"]
+        feature_columns = model_data["feature_columns"]
+
+        # Use the exact same input feature order as prediction.py
+        ordered_inputs = {
+            column: inputs[column]
+            for column in feature_columns
+        }
+
+        explanation = explain_decision_tree(
+            model=model,
+            preprocessor=preprocessor,
+            inputs=ordered_inputs
+        )
+
+        saved_result["explanation"] = explanation
+
+    except Exception as error:
+        saved_result["explanation"] = []
+        saved_result["explanation_error"] = str(error)
+
     st.session_state["last_result"] = {
         "disease": disease,
-        "result": result
+        "result": saved_result
     }
+
 
 
 def go_to_predictions(disease):
@@ -506,7 +609,7 @@ elif page == "Predictions":
             with st.spinner("Analyzing health indicators..."):
                 try:
                     result = predict_disease("diabetes", inputs)
-                    save_result("diabetes", result)
+                    save_result("diabetes", result, inputs)
                 except Exception as error:
                     st.error(f"Prediction error: {error}")
 
@@ -608,7 +711,7 @@ elif page == "Predictions":
             with st.spinner("Analyzing cardiovascular indicators..."):
                 try:
                     result = predict_disease("heart", inputs)
-                    save_result("heart", result)
+                    save_result("heart", result, inputs)
                 except Exception as error:
                     st.error(f"Prediction error: {error}")
 
@@ -762,7 +865,7 @@ elif page == "Predictions":
             with st.spinner("Analyzing kidney indicators..."):
                 try:
                     result = predict_disease("kidney", inputs)
-                    save_result("kidney", result)
+                    save_result("kidney", result, inputs)
                 except Exception as error:
                     st.error(f"Prediction error: {error}")
 
@@ -849,7 +952,7 @@ elif page == "Predictions":
             with st.spinner("Analyzing liver indicators..."):
                 try:
                     result = predict_disease("liver", inputs)
-                    save_result("liver", result)
+                    save_result("liver", result, inputs)
                 except Exception as error:
                     st.error(f"Prediction error: {error}")
 
@@ -952,7 +1055,7 @@ elif page == "Predictions":
             with st.spinner("Analyzing stroke indicators..."):
                 try:
                     result = predict_disease("stroke", inputs)
-                    save_result("stroke", result)
+                    save_result("stroke", result, inputs)
                 except Exception as error:
                     st.error(f"Prediction error: {error}")
 
