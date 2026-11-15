@@ -1,3 +1,6 @@
+import math
+import numbers
+from collections.abc import Mapping
 
 import joblib
 import pandas as pd
@@ -45,6 +48,46 @@ def load_model(disease_name):
     return model_data
 
 
+def validate_input_data(input_data, feature_columns):
+    """Validate user inputs before sending them to the model."""
+
+    if not isinstance(input_data, Mapping):
+        raise TypeError("Input data must be provided as a dictionary.")
+
+    missing_features = [
+        column for column in feature_columns
+        if column not in input_data
+    ]
+
+    if missing_features:
+        raise ValueError(
+            f"Missing input features: {missing_features}"
+        )
+
+    for column in feature_columns:
+        value = input_data[column]
+
+        if not pd.api.types.is_scalar(value):
+            raise ValueError(
+                f"Invalid value for '{column}': expected a single value."
+            )
+
+        if pd.isna(value):
+            raise ValueError(
+                f"Missing value for '{column}'. Please provide a valid value."
+            )
+
+        if isinstance(value, numbers.Real) and not math.isfinite(value):
+            raise ValueError(
+                f"Invalid numeric value for '{column}': "
+                "infinite values are not allowed."
+            )
+
+    return pd.DataFrame([
+        {column: input_data[column] for column in feature_columns}
+    ])
+
+
 def predict_disease(disease_name, input_data):
     """Generate a prediction using the saved model and preprocessor."""
 
@@ -54,22 +97,8 @@ def predict_disease(disease_name, input_data):
     preprocessor = model_data["preprocessor"]
     feature_columns = model_data["feature_columns"]
 
-    # Convert user inputs into a DataFrame
-    input_df = pd.DataFrame([input_data])
-
-    # Check that all required features are provided
-    missing_features = [
-        column for column in feature_columns
-        if column not in input_df.columns
-    ]
-
-    if missing_features:
-        raise ValueError(
-            f"Missing input features: {missing_features}"
-        )
-
-    # Keep the exact feature order used during training
-    input_df = input_df[feature_columns]
+        # Validate user inputs and convert them into a DataFrame
+    input_df = validate_input_data(input_data, feature_columns)
 
     # Apply the original preprocessing pipeline
     processed_input = preprocessor.transform(input_df)
