@@ -123,11 +123,12 @@ def show_result(result):
         st.markdown(
             """
             <div class="result-card result-positive">
-                <div class="result-title">⚠️ Disease Risk Detected</div>
+                <div class="result-title">Positive Dataset Class Predicted</div>
                 <p>
-                    The model classified the submitted information
-                    into the positive disease-risk category.
-                </p>
+    The model assigned this record to the positive
+    class based on patterns learned from the
+    training dataset. This is not a medical diagnosis.
+</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -135,12 +136,14 @@ def show_result(result):
     else:
         st.markdown(
             """
-            <div class="result-card result-negative">
+            <div class="result-title">Negative Dataset Class Predicted</div>
                 <div class="result-title">✓ No Disease Risk Detected</div>
                 <p>
-                    The model classified the submitted information
-                    into the negative disease-risk category.
-                </p>
+    The model assigned this record to the negative
+    class based on patterns learned from the
+    training dataset. This does not rule out
+    a medical condition.
+</p>
             </div>
             """,
             unsafe_allow_html=True
