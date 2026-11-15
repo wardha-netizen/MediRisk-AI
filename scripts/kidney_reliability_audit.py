@@ -75,12 +75,12 @@ def main():
     )
 
     train_hashes = pd.util.hash_pandas_object(
-        X_train.fillna("MISSING").astype(str),
+        X_test.astype("string").fillna("MISSING"),
         index=False
     )
 
     test_hashes = pd.util.hash_pandas_object(
-        X_test.fillna("MISSING").astype(str),
+        X_train.astype("string").fillna("MISSING"),
         index=False
     )
 
