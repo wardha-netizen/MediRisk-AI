@@ -485,3 +485,25 @@ button[data-baseweb="tab"][aria-selected="true"] {
     background-color: #FFFFFF !important;
     color: #17324D !important;
 }
+/* Download CSV Button */
+
+[data-testid="stDownloadButton"] button {
+    background-color: #FFFFFF !important;
+    color: #17324D !important;
+    border: 1px solid #DCE7F0 !important;
+    border-radius: 10px !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+}
+
+/* Button text and icons */
+[data-testid="stDownloadButton"] button * {
+    color: #17324D !important;
+}
+
+/* Hover effect */
+[data-testid="stDownloadButton"] button:hover {
+    background-color: #E7F4F6 !important;
+    border-color: #167D8D !important;
+    color: #167D8D !important;
+}
