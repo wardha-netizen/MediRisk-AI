@@ -1,0 +1,423 @@
+/* ==========================================
+   MEDIRISK AI — QUANTUM BLUE + ICE GLASS
+========================================== */
+
+:root {
+    --primary: #1769D2;
+    --primary-dark: #1053AD;
+    --primary-light: #E7F1FC;
+    --ice: #F3F8FC;
+    --surface: #FFFFFF;
+    --text: #142B45;
+    --muted: #53677D;
+    --border: #DCE7F1;
+    --input-blue: #EAF4FF;
+    --input-border: #B9D8F5;
+    --success-bg: #EAF6EF;
+    --success-text: #17613A;
+    --danger-bg: #FFF0EF;
+    --danger-text: #A52C2C;
+    --shadow: 0 5px 22px rgba(24, 65, 110, 0.06);
+}
+
+/* Main application */
+
+.stApp {
+    background: var(--ice) !important;
+    color: var(--text) !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+[data-testid="stHeader"] {
+    background: rgba(243, 248, 252, 0.94) !important;
+}
+
+.block-container {
+    max-width: 1280px;
+    padding: 2rem 3rem 4rem;
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text) !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.35px;
+}
+
+.stMarkdown p,
+.stMarkdown li {
+    color: var(--muted) !important;
+    line-height: 1.7;
+}
+
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] p {
+    color: var(--muted) !important;
+}
+
+/* Sidebar */
+
+[data-testid="stSidebar"] {
+    background: #FFFFFF !important;
+    border-right: 1px solid var(--border);
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    padding-top: 1.5rem;
+}
+
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: var(--text) !important;
+}
+
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span {
+    color: #40566D !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    color: var(--text) !important;
+    font-weight: 600;
+}
+
+/* Hero */
+
+.hero-title {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 750;
+    line-height: 1.12;
+    color: var(--text) !important;
+    letter-spacing: -2px;
+}
+
+.hero-highlight {
+    color: var(--primary) !important;
+}
+
+.hero-description {
+    font-size: 1.05rem;
+    color: var(--muted) !important;
+    line-height: 1.8;
+    max-width: 680px;
+}
+
+.eyebrow,
+.section-label {
+    display: inline-block;
+    color: #1457A5 !important;
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.eyebrow {
+    background: var(--primary-light);
+    border: 1px solid #D0E3F7;
+    border-radius: 7px;
+    padding: 7px 13px;
+}
+
+/* Cards */
+
+.metric-card,
+.disease-card,
+.result-card {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 15px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+
+.metric-card {
+    min-height: 120px;
+}
+
+.metric-label,
+.disease-description {
+    color: var(--muted) !important;
+    font-size: 0.86rem;
+}
+
+.metric-value {
+    color: var(--text) !important;
+    font-size: 2rem;
+    font-weight: 750;
+    margin-top: 8px;
+}
+
+.disease-card {
+    min-height: 155px;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.disease-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(24, 65, 110, 0.10);
+}
+
+.disease-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    margin-bottom: 14px;
+}
+
+.disease-name {
+    color: var(--text) !important;
+    font-size: 1.08rem;
+    font-weight: 750;
+}
+
+/* Information panels */
+
+.info-card {
+    background: #EAF3FB !important;
+    border: 1px solid #D5E5F3 !important;
+    border-left: 4px solid var(--primary) !important;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin: 14px 0;
+}
+
+.info-card h2,
+.info-card h3 {
+    color: var(--text) !important;
+    margin-top: 0;
+}
+
+.info-card p {
+    color: #40566D !important;
+}
+
+/* Form labels */
+
+[data-testid="stWidgetLabel"] p,
+[data-testid="stWidgetLabel"] label {
+    color: #1769D2 !important;
+    font-weight: 600 !important;
+}
+
+/* Dropdowns */
+
+[data-baseweb="select"] > div {
+    background: var(--input-blue) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 9px !important;
+    min-height: 42px;
+}
+
+[data-baseweb="select"] *,
+[data-baseweb="select"] input {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+[data-baseweb="popover"],
+[data-baseweb="menu"],
+[role="listbox"] {
+    background: #EAF4FF !important;
+}
+
+[role="option"] {
+    color: var(--text) !important;
+    background: #EAF4FF !important;
+}
+
+[role="option"]:hover {
+    background: #D5E9FC !important;
+}
+
+/* Number and text inputs */
+
+.stNumberInput input,
+.stTextInput input,
+.stDateInput input,
+[data-baseweb="input"] input {
+    background: var(--input-blue) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 9px !important;
+    min-height: 42px;
+}
+
+.stNumberInput input:focus,
+.stTextInput input:focus,
+.stDateInput input:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(23, 105, 210, 0.12) !important;
+}
+
+/* Number input plus and minus buttons */
+
+.stNumberInput button {
+    background: #DCEEFF !important;
+    color: var(--primary) !important;
+    border: 1px solid var(--input-border) !important;
+}
+
+.stNumberInput button:hover {
+    background: #C9E2FA !important;
+}
+
+/* Buttons */
+
+.stButton > button,
+.stFormSubmitButton > button,
+[data-testid="stFormSubmitButton"] button {
+    background: var(--primary) !important;
+    color: #FFFFFF !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 9px !important;
+    min-height: 44px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 700 !important;
+}
+
+.stButton > button p,
+.stFormSubmitButton > button p,
+[data-testid="stFormSubmitButton"] button p {
+    color: #FFFFFF !important;
+}
+
+.stButton > button:hover,
+.stFormSubmitButton > button:hover {
+    background: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+}
+
+/* Form containers */
+
+[data-testid="stForm"] {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+
+/* Dividers */
+
+hr {
+    border-color: var(--border) !important;
+}
+
+/* Prediction results */
+
+.result-positive {
+    background: var(--danger-bg) !important;
+    border: 1px solid #F2D1CE !important;
+    border-left: 5px solid #C64747 !important;
+}
+
+.result-negative {
+    background: var(--success-bg) !important;
+    border: 1px solid #CDE7D6 !important;
+    border-left: 5px solid #278653 !important;
+}
+
+.result-title {
+    color: var(--text) !important;
+    font-size: 1.45rem;
+    font-weight: 750;
+}
+
+.result-card p {
+    color: #40566D !important;
+}
+
+.result-number {
+    color: var(--primary) !important;
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin: 8px 0;
+}
+
+/* Progress bar */
+
+[data-testid="stProgressBar"] > div {
+    background: #DCE8F3 !important;
+}
+
+[data-testid="stProgressBar"] > div > div {
+    background: var(--primary) !important;
+}
+
+/* Alerts and expanders */
+
+[data-testid="stAlert"] {
+    border-radius: 10px;
+}
+
+[data-testid="stExpander"] {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+}
+
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p {
+    color: var(--text) !important;
+    font-weight: 600;
+}
+
+/* Data tables */
+
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Footer */
+
+.footer {
+    text-align: center;
+    color: var(--muted) !important;
+    font-size: 0.82rem;
+    padding: 28px 0 10px;
+    border-top: 1px solid var(--border);
+    margin-top: 45px;
+}
+
+.footer b {
+    color: var(--text) !important;
+}
+
+/* Hide Streamlit branding */
+
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+/* Responsive spacing */
+
+@media (max-width: 768px) {
+    .block-container {
+        padding: 1.2rem 1rem 3rem;
+    }
+
+    .hero-title {
+        font-size: 2.35rem;
+    }
+
+    [data-testid="stForm"] {
+        padding: 14px;
+    }
+}
