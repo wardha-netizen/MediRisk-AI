@@ -6,16 +6,22 @@ import plotly.express as px
 import streamlit as st
 
 
+# ==========================================
+# FILE PATHS
+# ==========================================
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 METRICS_PATH = BASE_DIR / "results" / "evaluation_results.csv"
 
-METRIC_NAMES = {
-    "Accuracy": ["accuracy", "accuracy_score"],
-    "Precision": ["precision", "precision_score"],
-    "Recall": ["recall", "recall_score"],
-    "F1-score": ["f1_score", "f1", "f1score"],
-    "ROC-AUC": ["roc_auc", "roc_auc_score", "auc"],
-}
+
+# ==========================================
+# COLOUR PALETTE
+# ==========================================
+
+NAVY = "#17324D"
+TEAL = "#0D9488"
+BACKGROUND = "#F2F7FC"
+SLATE = "#475569"
 
 COLORS = {
     "Accuracy": "#155E75",
@@ -23,6 +29,19 @@ COLORS = {
     "Recall": "#F2B84B",
     "F1-score": "#64748B",
     "ROC-AUC": "#8B5CF6",
+}
+
+
+# ==========================================
+# METRIC COLUMN NAMES
+# ==========================================
+
+METRIC_NAMES = {
+    "Accuracy": ["accuracy", "accuracy_score"],
+    "Precision": ["precision", "precision_score"],
+    "Recall": ["recall", "recall_score"],
+    "F1-score": ["f1_score", "f1", "f1score"],
+    "ROC-AUC": ["roc_auc", "roc_auc_score", "auc"],
 }
 
 
@@ -36,6 +55,10 @@ def normalize_name(name):
     )
 
 
+# ==========================================
+# LOAD AND PREPARE METRICS
+# ==========================================
+
 def prepare_metrics(df):
     data = df.copy()
 
@@ -44,114 +67,137 @@ def prepare_metrics(df):
         for column in data.columns
     }
 
-    disease_col = next(
+    disease_column = next(
         (
-            columns[key]
-            for key in ["disease", "model", "dataset", "name"]
-            if key in columns
+            columns[name]
+            for name in ["disease", "model", "dataset", "name"]
+            if name in columns
         ),
         None
     )
 
-    if disease_col is None:
+    if disease_column is None:
         raise ValueError(
-            "No disease/model name column found."
+            "The evaluation file must contain a "
+            "disease or model name column."
         )
 
     data = data.rename(
-        columns={disease_col: "Disease"}
+        columns={disease_column: "Disease"}
     )
 
     found_metrics = []
 
-    for display_name, aliases in METRIC_NAMES.items():
-        source = next(
+    for metric_name, aliases in METRIC_NAMES.items():
+
+        source_column = next(
             (
-                columns[key]
-                for key in aliases
-                if key in columns
+                columns[name]
+                for name in aliases
+                if name in columns
             ),
             None
         )
 
-        if source is None:
+        if source_column is None:
             continue
 
         values = pd.to_numeric(
-            data[source],
+            data[source_column],
             errors="coerce"
         )
 
-        if values.notna().any():
-            minimum = values.min()
-            maximum = values.max()
+        valid_values = values.dropna()
 
+        if not valid_values.empty:
+            minimum = valid_values.min()
+            maximum = valid_values.max()
+
+            # Convert fractions to percentages.
             if minimum >= 0 and maximum <= 1:
                 values = values * 100
 
             elif minimum < 0 or maximum > 100:
-                st.warning(
-                    f"Unexpected values detected in {display_name}."
+                raise ValueError(
+                    f"{metric_name} has scores "
+                    "outside the expected range."
                 )
 
-        data[display_name] = values
-        found_metrics.append(display_name)
+        data[metric_name] = values
+        found_metrics.append(metric_name)
 
     if not found_metrics:
         raise ValueError(
-            "No supported evaluation metrics were found."
+            "No supported evaluation metrics found."
         )
 
     return data, found_metrics
 
 
+# ==========================================
+# LIGHT PLOTLY CHART THEME
+# ==========================================
+
 def style_chart(fig):
-    """Apply a readable light theme to Plotly charts."""
+    """
+    Apply a consistent light theme with
+    readable dark text and percentage labels.
+    """
 
     fig.update_layout(
         template="plotly_white",
 
+        paper_bgcolor=BACKGROUND,
+        plot_bgcolor=BACKGROUND,
+
         font=dict(
             family="Arial",
-            size=14,
-            color="#17324D"
+            size=15,
+            color=NAVY
         ),
 
         title=dict(
+            text="Decision Tree Model Performance Comparison",
             font=dict(
-                size=22,
-                color="#17324D"
+                family="Arial",
+                size=23,
+                color=NAVY
             ),
-            x=0.02
+            x=0.02,
+            xanchor="left"
         ),
 
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-
         xaxis=dict(
-            title_font=dict(
-                color="#17324D",
-                size=15
+            title=dict(
+                text="Disease",
+                font=dict(
+                    size=16,
+                    color=NAVY
+                )
             ),
             tickfont=dict(
-                color="#334155",
-                size=13
+                size=14,
+                color=NAVY
             ),
             showgrid=False,
-            linecolor="#CBD5E1",
+            showline=True,
+            linecolor="#94A3B8",
             zeroline=False
         ),
 
         yaxis=dict(
-            title_font=dict(
-                color="#17324D",
-                size=15
+            title=dict(
+                text="Performance Score (%)",
+                font=dict(
+                    size=16,
+                    color=NAVY
+                )
             ),
             tickfont=dict(
-                color="#334155",
-                size=12
+                size=13,
+                color=NAVY
             ),
-            range=[0, 100],
+            range=[0, 112],
             gridcolor="#D9E3EC",
             zeroline=False
         ),
@@ -159,103 +205,158 @@ def style_chart(fig):
         legend=dict(
             title=dict(
                 text="Evaluation Metric",
-                font=dict(color="#17324D")
+                font=dict(
+                    color=NAVY,
+                    size=13
+                )
             ),
             font=dict(
-                color="#334155",
+                color=NAVY,
                 size=13
             ),
-            bgcolor="rgba(255,255,255,0.9)",
+            bgcolor="#FFFFFF",
             orientation="h",
-            y=-0.28,
             x=0.5,
-            xanchor="center"
+            xanchor="center",
+            y=-0.25
         ),
 
         margin=dict(
-            l=40,
-            r=30,
-            t=80,
-            b=110
+            l=65,
+            r=35,
+            t=90,
+            b=120
         ),
 
-        height=520,
+        height=570,
 
         hoverlabel=dict(
             bgcolor="#FFFFFF",
-            font=dict(color="#17324D")
+            font=dict(
+                color=NAVY,
+                size=13
+            )
+        )
+    )
+
+    # Explicitly override axis text colours.
+    fig.update_xaxes(
+        tickfont=dict(color=NAVY, size=14),
+        title_font=dict(color=NAVY, size=16)
+    )
+
+    fig.update_yaxes(
+        tickfont=dict(color=NAVY, size=13),
+        title_font=dict(color=NAVY, size=16)
+    )
+
+    # Show values above every bar.
+    fig.update_traces(
+        texttemplate="%{y:.1f}%",
+        textposition="outside",
+        textfont=dict(
+            family="Arial",
+            size=12,
+            color=NAVY
+        ),
+        cliponaxis=False,
+        hovertemplate=(
+            "<b>%{x}</b><br>"
+            "Score: %{y:.2f}%"
+            "<extra></extra>"
         )
     )
 
     return fig
 
 
+# ==========================================
+# STREAMLIT MODEL COMPARISON PAGE
+# ==========================================
+
 def render_model_comparison():
+
     st.title("Advanced Model Comparison")
 
     st.caption(
-        "Compare the performance of MediRisk AI's "
+        "Compare the evaluation results of MediRisk AI's "
         "five Decision Tree classification models."
     )
 
+    # ======================================
+    # READ METRICS
+    # ======================================
+
     if not METRICS_PATH.exists():
         st.warning(
-            "Evaluation results are missing. "
-            "Please run the model evaluation script first."
+            "Evaluation results not found. "
+            "Run the project's model evaluation script."
         )
         return
 
     try:
-        raw = pd.read_csv(METRICS_PATH)
+        raw_data = pd.read_csv(METRICS_PATH)
 
-        metrics, available = prepare_metrics(raw)
+        if raw_data.empty:
+            st.warning("The evaluation results file is empty.")
+            return
+
+        metrics, available = prepare_metrics(raw_data)
 
     except Exception as error:
         st.error(
-            f"Unable to load evaluation results: {error}"
+            f"Unable to load evaluation metrics: {error}"
         )
         return
 
-    # ==========================================
+    # ======================================
     # PERFORMANCE OVERVIEW
-    # ==========================================
+    # ======================================
 
     st.subheader("Performance Overview")
 
-    display_df = metrics[
+    display_data = metrics[
         ["Disease"] + available
     ].copy()
 
     for metric in available:
-        display_df[metric] = display_df[metric].round(2)
+        display_data[metric] = display_data[metric].round(2)
 
     st.dataframe(
-        display_df,
+        display_data,
         use_container_width=True,
         hide_index=True
     )
 
+    st.caption(
+        "Scores are loaded from the project's saved "
+        "evaluation results. Values are displayed as percentages."
+    )
+
     st.divider()
 
-    # ==========================================
-    # MODEL METRIC COMPARISON
-    # ==========================================
+    # ======================================
+    # METRIC COMPARISON CHART
+    # ======================================
 
     st.subheader("Compare Evaluation Metrics")
 
+    default_metrics = [
+        metric
+        for metric in [
+            "Accuracy",
+            "Precision",
+            "Recall",
+            "F1-score"
+        ]
+        if metric in available
+    ]
+
     selected_metrics = st.multiselect(
         "Choose metrics",
-        available,
-        default=[
-            metric
-            for metric in [
-                "Accuracy",
-                "Precision",
-                "Recall",
-                "F1-score"
-            ]
-            if metric in available
-        ]
+        options=available,
+        default=default_metrics,
+        key="comparison_metrics"
     )
 
     if selected_metrics:
@@ -271,42 +372,36 @@ def render_model_comparison():
             subset=["Score"]
         )
 
-        fig = px.bar(
-            chart_data,
-            x="Disease",
-            y="Score",
-            color="Metric",
-            barmode="group",
-            title="Decision Tree Model Performance Comparison",
-            color_discrete_map=COLORS,
-            text_auto=".1f"
-        )
+        if not chart_data.empty:
 
-        fig.update_traces(
-            textposition="outside",
-            textfont=dict(
-                color="#17324D",
-                size=11
-            ),
-            cliponaxis=False,
-            hovertemplate=(
-                "<b>%{x}</b><br>"
-                "Score: %{y:.2f}%"
-                "<extra></extra>"
+            fig = px.bar(
+                chart_data,
+                x="Disease",
+                y="Score",
+                color="Metric",
+                barmode="group",
+                color_discrete_map=COLORS,
+                title="Decision Tree Model Performance Comparison"
             )
-        )
 
-        fig.update_layout(
-            xaxis_title="Disease",
-            yaxis_title="Score (%)"
-        )
+            # Apply all styling after the chart is created.
+            fig = style_chart(fig)
 
-        fig = style_chart(fig)
+            # IMPORTANT:
+            # theme=None prevents Streamlit from overriding
+            # the Plotly figure's own colours and fonts.
+            st.plotly_chart(
+                fig,
+                use_container_width=True,
+                theme=None,
+                key="medirisk_model_comparison_chart"
+            )
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True
-        )
+        else:
+            st.info(
+                "No valid scores are available "
+                "for the selected metrics."
+            )
 
     else:
         st.info(
@@ -315,18 +410,19 @@ def render_model_comparison():
 
     st.divider()
 
-    # ==========================================
+    # ======================================
     # INDIVIDUAL MODEL ANALYSIS
-    # ==========================================
+    # ======================================
 
     st.subheader("Individual Model Analysis")
 
     disease = st.selectbox(
-        "Choose a model to inspect",
-        metrics["Disease"].astype(str).tolist()
+        "Choose a disease model",
+        metrics["Disease"].astype(str).tolist(),
+        key="individual_model_selection"
     )
 
-    selected = metrics[
+    selected_row = metrics[
         metrics["Disease"].astype(str) == disease
     ].iloc[0]
 
@@ -336,87 +432,116 @@ def render_model_comparison():
 
     for index, metric in enumerate(available[:5]):
 
-        value = selected[metric]
+        value = selected_row[metric]
 
         metric_columns[index].metric(
-            metric,
-            f"{value:.2f}%"
-            if pd.notna(value)
-            else "N/A"
-        )
-
-    # ==========================================
-    # MODEL REVIEW NOTES
-    # ==========================================
-
-    st.markdown("### Model Review Notes")
-
-    disease_lower = disease.lower()
-
-    if "stroke" in disease_lower:
-        st.warning(
-            "Stroke classification requires further investigation. "
-            "Positive cases may be underrepresented in the dataset. "
-            "Review precision, recall, false positives and "
-            "false negatives."
-        )
-
-    elif "kidney" in disease_lower:
-        st.info(
-            "The Kidney Disease model previously reported very "
-            "high accuracy. Check whether duplicates or data "
-            "leakage may affect the results."
-        )
-
-    elif "liver" in disease_lower:
-        st.info(
-            "The Liver Disease model may benefit from reviewing "
-            "class balance, Decision Tree depth and "
-            "generalisation performance."
-        )
-
-    else:
-        st.info(
-            "Evaluate the model using accuracy, precision, "
-            "recall and F1-score together. "
-            "No single metric gives a complete picture."
+            label=metric,
+            value=(
+                f"{value:.2f}%"
+                if pd.notna(value)
+                else "N/A"
+            )
         )
 
     st.divider()
 
-    # ==========================================
-    # PERFORMANCE INTERPRETATION
-    # ==========================================
+    # ======================================
+    # MODEL REVIEW NOTES
+    # ======================================
+
+    st.subheader("Model Review Notes")
+
+    disease_lower = disease.lower()
+
+    if "stroke" in disease_lower:
+
+        st.warning(
+            "The Stroke model requires closer evaluation. "
+            "Examine positive-class precision, recall, "
+            "false positives, false negatives and "
+            "class imbalance. High accuracy alone "
+            "does not demonstrate reliable positive-case "
+            "classification."
+        )
+
+    elif "kidney" in disease_lower:
+
+        st.info(
+            "The Kidney model has reported very high "
+            "performance. Review duplicate records, "
+            "train-test separation and preprocessing "
+            "to verify that the score is reliable."
+        )
+
+    elif "liver" in disease_lower:
+
+        st.info(
+            "Review Liver model performance using "
+            "precision, recall, F1-score and class "
+            "distribution. Consider testing different "
+            "Decision Tree parameters with cross-validation."
+        )
+
+    else:
+
+        st.info(
+            "Compare accuracy with precision, recall "
+            "and F1-score to better understand how "
+            "the model performs on different classes."
+        )
+
+    # ======================================
+    # MODEL PERFORMANCE INTERPRETATION
+    # ======================================
+
+    st.divider()
 
     st.subheader("Understanding Evaluation Metrics")
 
     with st.expander("What is Accuracy?"):
         st.write(
-            "Accuracy is the proportion of all test records "
-            "classified correctly."
+            "Accuracy measures the percentage of "
+            "all test records classified correctly."
         )
 
     with st.expander("What is Precision?"):
         st.write(
-            "Precision measures how many records predicted "
-            "as positive were actually positive."
+            "Precision measures how many records "
+            "predicted as positive actually belong "
+            "to the positive class."
         )
 
     with st.expander("What is Recall?"):
         st.write(
-            "Recall measures how many actual positive records "
-            "the model correctly identified."
+            "Recall measures how many actual "
+            "positive records the model identifies."
         )
 
     with st.expander("What is F1-score?"):
         st.write(
-            "F1-score is the harmonic mean of precision "
-            "and recall. It is particularly useful when "
-            "class distributions are imbalanced."
+            "F1-score is the harmonic mean of "
+            "precision and recall. It is useful "
+            "when studying class imbalance."
         )
 
+    with st.expander("What is ROC-AUC?"):
+        st.write(
+            "ROC-AUC measures how well a model "
+            "ranks positive cases above negative "
+            "cases across different classification "
+            "thresholds."
+        )
+
+    # ======================================
+    # EDUCATIONAL DISCLAIMER
+    # ======================================
+
+    st.divider()
+
     st.warning(
-        "MediRisk AI is an educational machine learning project. "
-        "Results are based on historical datasets and are not "
-        "clinically validated medical assessments."
+        "MediRisk AI is an educational machine "
+        "learning project. Its predictions and "
+        "performance metrics are based on historical "
+        "datasets and are not clinically validated "
+        "medical assessments."
     )

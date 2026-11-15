@@ -529,3 +529,17 @@ div[data-baseweb="tag"] span {
 div[data-baseweb="select"] input {
     color: #17324D !important;
 }
+/* Restore readable Plotly labels */
+
+[data-testid="stPlotlyChart"] .js-plotly-plot svg text {
+    fill: #17324D !important;
+}
+
+[data-testid="stPlotlyChart"] .js-plotly-plot .legendtext {
+    fill: #17324D !important;
+}
+
+[data-testid="stPlotlyChart"] .js-plotly-plot .xtick text,
+[data-testid="stPlotlyChart"] .js-plotly-plot .ytick text {
+    fill: #17324D !important;
+}
