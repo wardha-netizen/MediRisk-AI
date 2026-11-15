@@ -5,7 +5,7 @@ from pathlib import Path
 from src.prediction import predict_disease, DISEASES
 from src.data_loader import load_kidney
 from src.dataset_explorer import render_dataset_explorer
-
+from src.model_comparison import render_model_comparison
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -218,6 +218,7 @@ with st.sidebar:
         "Predictions",
         "Dataset Explorer",
         "Model Insights",
+        "Model Comparison",
         "About Project",
     ],
     label_visibility="collapsed",
@@ -1052,7 +1053,8 @@ elif page == "Model Insights":
 # ==========================================
 # ABOUT PAGE
 # ==========================================
-
+elif page == "Model Comparison":
+    render_model_comparison()
 elif page == "About Project":
 
     section_heading(
