@@ -4,7 +4,7 @@ from pathlib import Path
 
 from src.prediction import predict_disease, DISEASES
 from src.data_loader import load_kidney
-
+from src.dataset_explorer import render_dataset_explorer
 
 # ==========================================
 # PAGE CONFIGURATION
@@ -212,16 +212,17 @@ with st.sidebar:
     st.markdown("### MENU")
 
     page = st.radio(
-        "Navigate",
-        [
-            "Home",
-            "Predictions",
-            "Model Insights",
-            "About Project"
-        ],
-        label_visibility="collapsed",
-        key="navigation"
-    )
+    "Navigate",
+    [
+        "Home",
+        "Predictions",
+        "Dataset Explorer",
+        "Model Insights",
+        "About Project",
+    ],
+    label_visibility="collapsed",
+    key="navigation",
+)
 
     st.markdown("---")
     st.markdown("### MODEL COLLECTION")
@@ -963,6 +964,8 @@ elif page == "Predictions":
 # ==========================================
 # MODEL INSIGHTS PAGE
 # ==========================================
+elif page == "Dataset Explorer":
+    render_dataset_explorer()
 
 elif page == "Model Insights":
 
