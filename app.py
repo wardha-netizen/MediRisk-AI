@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
+from src.error_handling import get_prediction_error_message
 
 from src.prediction import predict_disease, DISEASES
 from src.data_loader import load_kidney
@@ -617,7 +618,7 @@ elif page == "Predictions":
                     result = predict_disease("diabetes", inputs)
                     save_result("diabetes", result, inputs)
                 except Exception as error:
-                    st.error(f"Prediction error: {error}")
+                    st.error(get_prediction_error_message(error))
 
     # --------------------------------------
     # HEART DISEASE FORM
@@ -719,7 +720,7 @@ elif page == "Predictions":
                     result = predict_disease("heart", inputs)
                     save_result("heart", result, inputs)
                 except Exception as error:
-                    st.error(f"Prediction error: {error}")
+                    st.error(get_prediction_error_message(error))
 
     # --------------------------------------
     # KIDNEY DISEASE FORM
@@ -873,7 +874,7 @@ elif page == "Predictions":
                     result = predict_disease("kidney", inputs)
                     save_result("kidney", result, inputs)
                 except Exception as error:
-                    st.error(f"Prediction error: {error}")
+                    st.error(get_prediction_error_message(error))
 
     # --------------------------------------
     # LIVER DISEASE FORM
@@ -960,7 +961,7 @@ elif page == "Predictions":
                     result = predict_disease("liver", inputs)
                     save_result("liver", result, inputs)
                 except Exception as error:
-                    st.error(f"Prediction error: {error}")
+                    st.error(get_prediction_error_message(error))
 
     # --------------------------------------
     # STROKE FORM
@@ -1063,7 +1064,7 @@ elif page == "Predictions":
                     result = predict_disease("stroke", inputs)
                     save_result("stroke", result, inputs)
                 except Exception as error:
-                    st.error(f"Prediction error: {error}")
+                    st.error(get_prediction_error_message(error))
 
     # --------------------------------------
     # DISPLAY SAVED RESULT
