@@ -6,6 +6,7 @@ from src.prediction import predict_disease, DISEASES
 from src.data_loader import load_kidney
 from src.dataset_explorer import render_dataset_explorer
 from src.model_comparison import render_model_comparison
+from src.prediction_analysis import render_prediction_analysis
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -219,6 +220,7 @@ with st.sidebar:
         "Dataset Explorer",
         "Model Insights",
         "Model Comparison",
+        "Actual vs Predicted",
         "About Project",
     ],
     label_visibility="collapsed",
@@ -1055,6 +1057,8 @@ elif page == "Model Insights":
 # ==========================================
 elif page == "Model Comparison":
     render_model_comparison()
+elif page == "Actual vs Predicted":
+    render_prediction_analysis()
 elif page == "About Project":
 
     section_heading(
