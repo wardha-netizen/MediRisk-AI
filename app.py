@@ -11,6 +11,7 @@ from src.model_experiments import render_model_experiments
 from src.prediction import load_model
 from src.model_explainer import explain_decision_tree
 from src.input_guidance import render_input_guidance
+from src.project_architecture import show_project_architecture
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -330,6 +331,7 @@ with st.sidebar:
         "Model Comparison",
         "Actual vs Predicted",
         "Model Experiments",
+        "Project Architecture",
         "About Project",
     ],
     label_visibility="collapsed",
@@ -1170,6 +1172,8 @@ elif page == "Actual vs Predicted":
     render_prediction_analysis()
 elif page == "Model Experiments":
     render_model_experiments()
+elif page == "Project Architecture":
+    show_project_architecture()
 elif page == "About Project":
 
     section_heading(
