@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 from src.error_handling import get_prediction_error_message
+from src.welcome import render_welcome
 
 from src.prediction import predict_disease, DISEASES
 from src.data_loader import load_kidney
@@ -322,10 +323,16 @@ with st.sidebar:
 
     st.markdown("### MENU")
 
+    if "navigation" not in st.session_state:
+        st.session_state["navigation"] = "Welcome"
+    elif st.session_state["navigation"] == "Home":
+        st.session_state["navigation"] = "Dashboard"
+
     page = st.radio(
     "Navigate",
-    [
-        "Home",
+     [
+        "Welcome",
+        "Dashboard",
         "Predictions",
         "Dataset Explorer",
         "Model Insights",
@@ -335,6 +342,7 @@ with st.sidebar:
         "Project Architecture",
         "About Project",
     ],
+    
     label_visibility="collapsed",
     key="navigation",
 )
@@ -369,7 +377,10 @@ with st.sidebar:
 # HOME PAGE
 # ==========================================
 
-if page == "Home":
+if page == "Welcome":
+    render_welcome()
+
+elif page == "Dashboard":
 
     st.markdown(
         '<div class="eyebrow">✦ INTELLIGENT HEALTH RISK INSIGHTS</div>',
